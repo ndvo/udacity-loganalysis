@@ -7,6 +7,8 @@ This script was created as part of the FullStack nanodegree in Udacity.
 
 This script is an exercise to learn SQL. Please, do not try to use it in
 production and be very careful if using parts of it in a production code.
+Keep in mind that it was written by a student who was trying to learn this
+skills.
 
 ## Installation
 
@@ -17,7 +19,8 @@ pip install psycopg2
 ```
 
 It asumes there is a local installation of PostgreSQL server with a database
-named "news".
+named "news" with the structure and data provided in this link; 
+https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
 
 ## Usage
 
