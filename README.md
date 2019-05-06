@@ -22,6 +22,8 @@ It asumes there is a local installation of PostgreSQL server with a database
 named "news" with the structure and data provided in this link; 
 https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
 
+The database is provided by Udacity.
+
 ## Usage
 
 To execute the program, open a terminal, navigate to the directory containing
