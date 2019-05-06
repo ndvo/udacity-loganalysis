@@ -7,13 +7,14 @@ The connection is opened at the start of the program and closed in the end.
 The same connection is used throughout the program
 """
 
-# Connect to the database and create a cursor. 
+# Connect to the database and create a cursor.
 # Cursor is closed before the program finishes.
 db = psycopg2.connect("dbname=news")
 cur = db.cursor()
 
+
 def topArticles(topmost=3):
-    """ Returns the topmost viewed articles from the database. 
+    """ Returns the topmost viewed articles from the database.
 
         Return value is a tuple with the columns and the result object.
     """
@@ -26,9 +27,10 @@ def topArticles(topmost=3):
     ORDER BY count DESC
     LIMIT %s ;
     """
-    cur.execute(query, (topmost,) )
+    cur.execute(query, (topmost,))
     colnames = [desc[0] for desc in cur.description]
     return (colnames, cur.fetchall())
+
 
 def topAuthors(topmost=10):
     """ Returns the topmost viewed authors from the database.
@@ -49,11 +51,12 @@ def topAuthors(topmost=10):
      ORDER BY views DESC
      LIMIT %s ;
     """
-    cur.execute(query, (topmost,) )
+    cur.execute(query, (topmost,))
     colnames = [desc[0] for desc in cur.description]
     return (colnames, cur.fetchall())
 
-def topErrorsPerDay(topmost_percent = 1):
+
+def topErrorsPerDay(topmost_percent=1):
     """
     Returns the days with at least topmost_percent responses as errors.
 
@@ -61,13 +64,13 @@ def topErrorsPerDay(topmost_percent = 1):
     object.
     """
     query = """
-    SELECT distinct 
+    SELECT distinct
                 substring(to_char(total.day, 'YYYY-MM-DD') for 10)
                     AS day,
             total,
             errors,
             round((cast(errors AS decimal)*100)/total,2) AS percent
-    FROM log 
+    FROM log
     LEFT JOIN (
         SELECT date_trunc('day',time) as day, count(id) total
         FROM log
@@ -85,7 +88,7 @@ def topErrorsPerDay(topmost_percent = 1):
     ORDER BY percent DESC
     ;
     """
-    cur.execute(query, (topmost_percent,) )
+    cur.execute(query, (topmost_percent,))
     colnames = [desc[0] for desc in cur.description]
     return (colnames, cur.fetchall())
 
@@ -100,10 +103,11 @@ def report_line(row, title=False, just=50):
         print '-'*(just*n_items+2*n_items+1)
     print "|",
     for c in row:
-        print str(c).ljust(just), 
+        print str(c).ljust(just),
     print "|\n",
     if title:
         print '-'*(just*n_items+2*n_items+1)
+
 
 def report(result, title=None, just=50):
     """ Prints one report to the console.
@@ -118,7 +122,8 @@ def report(result, title=None, just=50):
         report_line(r, just=just)
     print '-'*(just*len(cols)+2*len(cols)+1)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     report(topArticles(), 'Top 3 most read articles')
     report(topAuthors(), 'Top 10 most read authors')
     report(topErrorsPerDay(), 'Top errors per day', 20)
