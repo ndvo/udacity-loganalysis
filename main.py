@@ -77,8 +77,7 @@ def topErrorsPerDay(topmost_percent=1):
     with db() as cur:
         query = """
         SELECT distinct
-                    substring(to_char(total.day, 'YYYY-MM-DD') for 10)
-                        AS day,
+                to_char(total.day, 'FMMonth DD, YYYY') AS day,
                 total,
                 errors,
                 round((cast(errors AS decimal)*100)/total,2) AS percent
